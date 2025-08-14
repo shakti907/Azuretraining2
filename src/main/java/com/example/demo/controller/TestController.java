@@ -22,6 +22,7 @@ public class TestController {
 	public List<Employee> getAlllist(){
 		
 		List<Employee> ls= dao.findAll();
+		System.out.println("");
 	
 	return ls;
 		
