@@ -22,12 +22,6 @@ public class TestController {
 	public List<Employee> getAlllist(){
 		
 		List<Employee> ls= dao.findAll();
-		
-//	Employee emp=new Employee();
-//	emp.setAge(28);
-//	emp.setName("Shakti");
-//	
-//	ls.add(emp);
 	
 	return ls;
 		
