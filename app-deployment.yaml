@@ -14,52 +14,47 @@ spec:
     spec:
       containers:
         - name: springboot-crud-k8s
-          image: shakti907docker/mysqlwithspringapp1
+          image: azureregistrycontainer.azurecr.io/mysqlwithspringapp1:latest
           ports:
             - containerPort: 8081
-          env:   # Setting Enviornmental Variables
+          env:   # Setting Environmental Variables
             - name: DB_HOST   # Setting Database host address from configMap
               valueFrom:
-            	configMapKeyRef:
-		      name: springboot-config
-		      key: DB_HOST
-              
+                configMapKeyRef:
+                  name: springboot-config
+                  key: DB_HOST
             - name: DB_PORT   # Setting Database host address from configMap
               valueFrom:
-              	configMapKeyRef:
-              		name: springboot-config
-              		key: DB_PORT
-
-            - name: DB_NAME  # Setting Database name from configMap
+                configMapKeyRef:
+                  name: springboot-config
+                  key: DB_PORT
+            - name: DB_NAME   # Setting Database name from configMap
               valueFrom:
-              	configMapKeyRef:
-              		name: springboot-config
-              		key: DB_NAME
-
-            - name: DB_USERNAME  # Setting Database username from Secret
+                configMapKeyRef:
+                  name: springboot-config
+                  key: DB_NAME
+            - name: DB_USERNAME   # Setting Database username from Secret
               valueFrom:
-              	configMapKeyRef:
-              		name: springboot-config
-              		key: DB_USER
-
-            - name: DB_PASSWORD # Setting Database password from Secret
+                configMapKeyRef:
+                  name: springboot-config
+                  key: DB_USER
+            - name: DB_PASSWORD   # Setting Database password from Secret
               valueFrom:
-            	secretKeyRef:
-		      name: mysql-secret
-		      key: DB_PASS
+                secretKeyRef:
+                  name: mysql-secret
+                  key: DB_PASS
 
 ---
 
-apiVersion: v1 # Kubernetes API version
-kind: Service # Kubernetes resource kind we are creating
-metadata: # Metadata of the resource kind we are creating
-  name: springboot-k8s-mysql
+apiVersion: v1
+kind: Service
+metadata:
+  name: springboot-crud-deployment
 spec:
   selector:
     app: springboot-k8s-mysql
   ports:
-    - protocol: "TCP"
-      port: 12002 # The port that the service is running on in the cluster
+    - protocol: TCP
+      port: 12002      # The port that the service is running on in the cluster
       targetPort: 8081 # The port exposed by the service
-  type: LoadBalancer # type of the service.
-
+  type: LoadBalancer  # Type of the service
